@@ -1,0 +1,36 @@
+name: Run Python Script in utils
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - 'week*/README.md'
+
+jobs:
+  run-python-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+    
+
+      - name: Run Python script
+        run: |
+          cd utils
+          python update_daily_tasks_all.py
+
+      - name: Commit and push changes
+        run: |
+          git config --global user.name 'mathos6147'
+          git config --global user.email 'kgw6147@naver.com'
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/EGAlgorithmStudy/mathos6147.git
+          git add .
+          git diff --cached --quiet || git commit -m ":calendar: weekly task summary"
+          git push
