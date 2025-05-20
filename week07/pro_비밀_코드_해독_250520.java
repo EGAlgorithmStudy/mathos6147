@@ -1,4 +1,4 @@
-public class pro_비밀_코드_해독.java {
+public class pro_비밀_코드_해독_250520.java {
     
     static int[] number;
     static int c = 0;
